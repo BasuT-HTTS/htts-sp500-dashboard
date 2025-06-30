@@ -145,8 +145,16 @@ if forecast is not None:
     fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_lower'], name='yhat_lower', line=dict(color='lightblue')))
     fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_upper'], name='yhat_upper', line=dict(color='lightblue')))
     fig_forecast.update_layout(title="60-Day Forecast using Prophet")
-
     st.plotly_chart(fig_forecast, use_container_width=True)
+    with st.expander("ℹ️ What does this forecast mean?"):
+        st.markdown("""
+        - **yhat**: Expected predicted value for each future date.
+        - **yhat_lower**: Conservative lower bound of the forecast range (95% confidence).
+        - **yhat_upper**: Optimistic upper bound of the forecast range (95% confidence).
+        
+        This forecast helps you see both the trend and the possible uncertainty in future values.
+        """)
+
 
 st.subheader("Latest Signal Snapshot")
 cols = ['Close', 'Return', 'HMM_State', 'Signal']
