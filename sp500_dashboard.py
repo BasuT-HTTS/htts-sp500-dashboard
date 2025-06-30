@@ -87,12 +87,19 @@ vol_cols = [col for col in df.columns if "Volatility" in col]
 st.line_chart(df[vol_cols])
 
 st.subheader("HMM Market Regimes")
-fig_hmm = px.scatter(df, x=df.index, y='Close', color='HMM_State', title="Market States")
+# fig_hmm = px.scatter(df, x=df.index, y='Close', color='HMM_State', title="Market States")
+df_plot = df.reset_index()  # Flatten index
+fig_hmm = px.scatter(df_plot, x='Date', y='Close', color='HMM_State', title="Market States")
+
 st.plotly_chart(fig_hmm, use_container_width=True)
 
 st.subheader("60-Day Forecast using Prophet")
 forecast = forecast_prophet(df)
-fig_forecast = px.line(forecast, x='ds', y=['yhat', 'yhat_lower', 'yhat_upper'], title="Forecast")
+# fig_forecast = px.line(forecast, x='ds', y=['yhat', 'yhat_lower', 'yhat_upper'], title="Forecast")
+fig_forecast = px.line(forecast, x='ds', y='yhat', title="Forecast")
+fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_lower'], mode='lines', name='yhat_lower')
+fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_upper'], mode='lines', name='yhat_upper')
+
 st.plotly_chart(fig_forecast, use_container_width=True)
 
 st.subheader("Aggregated Signal Snapshot")
