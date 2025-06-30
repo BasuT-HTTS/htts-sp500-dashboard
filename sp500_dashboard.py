@@ -25,7 +25,9 @@ def load_csv_from_file(filename):
 
     # Date parsing
     if 'Date' in df.columns:
-        df['Date'] = pd.to_datetime(df['Date'], format="%d-%m-%Y", errors='coerce').dt.date
+        # df['Date'] = pd.to_datetime(df['Date'], format="%d-%m-%Y", errors='coerce').dt.date
+        df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.date
+
         df = df[df['Date'].notna()]
         df.set_index('Date', inplace=True)
 
