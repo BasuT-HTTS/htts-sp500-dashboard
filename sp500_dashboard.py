@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 from datetime import datetime, date
 
 st.set_page_config(layout="wide")
-st.title("📊 S&P 500 + Multi-Index Dashboard")
+st.title("📊 Index Dashboard")
 
 # Load from CSV with full cleaning
 def load_csv_from_file(filename):
