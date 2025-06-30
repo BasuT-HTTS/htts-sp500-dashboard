@@ -40,7 +40,7 @@ def load_csv_from_file(filename):
     # Fallback: calculate return from Close if missing
     if 'Return' not in df.columns and 'Close' in df.columns:
         df['Return'] = df['Close'].pct_change()
-
+    st.write(df)
     return df.dropna()
 
 
