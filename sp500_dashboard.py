@@ -14,21 +14,35 @@ def load_csv_from_file(filename):
     df = pd.read_csv(os.path.join(data_dir, filename))
     df.columns = [col.strip() for col in df.columns]
 
+    # Rename known columns to expected names
     rename_map = {
         "Price": "Close",
         "Vol.": "Volume",
-        "Change %": "Return"
+        "Change %": "Change_Pct"
     }
     df.rename(columns=rename_map, inplace=True)
 
+    # Convert date
     if 'Date' in df.columns:
-        df['Date'] = pd.to_datetime(df['Date'])
+        df['Date'] = pd.to_datetime(df['Date'], format="%d-%m-%Y", errors='coerce')
         df.set_index('Date', inplace=True)
 
-    if 'Close' in df.columns and 'Return' not in df.columns:
+    # Clean numeric columns (remove commas and convert to float)
+    numeric_cols = ['Close', 'Open', 'High', 'Low']
+    for col in numeric_cols:
+        if col in df.columns:
+            df[col] = df[col].astype(str).str.replace(',', '').astype(float)
+
+    # Convert 'Change_Pct' to decimal returns
+    if 'Change_Pct' in df.columns:
+        df['Return'] = df['Change_Pct'].str.replace('%', '').astype(float) / 100
+
+    # Fallback: calculate return from Close if missing
+    if 'Return' not in df.columns and 'Close' in df.columns:
         df['Return'] = df['Close'].pct_change()
 
     return df.dropna()
+
 
 # Compute rolling volatility
 def compute_volatility(df, window=20):
