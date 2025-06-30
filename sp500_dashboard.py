@@ -83,7 +83,7 @@ def aggregate_signals(df):
     return df
 
 # Sidebar setup
-st.sidebar.title("⚙️ Options")
+st.sidebar.title("⚙️ Settings")
 data_dir = "data"
 
 if not os.path.exists(data_dir):
