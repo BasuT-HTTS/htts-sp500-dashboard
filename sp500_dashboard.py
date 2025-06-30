@@ -140,6 +140,7 @@ if forecast is not None:
     fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_upper'], mode='lines', name='yhat_upper')
     st.plotly_chart(fig_forecast, use_container_width=True)
 
-st.subheader("Aggregated Signal Snapshot")
+st.subheader("Latest Signal Snapshot")
 cols = ['Close', 'Return', 'HMM_State', 'Signal']
-st.dataframe(df[[c for c in cols if c in df.columns]].tail(10))
+latest_row = df[[c for c in cols if c in df.columns]].iloc[-1:]
+st.dataframe(latest_row)
