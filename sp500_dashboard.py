@@ -103,7 +103,9 @@ index_choice = csv_files[display_names.index(selected_display)]
 df = load_csv_from_file(index_choice)
 
 # Start date limited to actual range
-start_date = st.sidebar.date_input("Start Date", datetime(2025, 1, 2).date(), min(df.index), min_value=min(df.index), max_value=max(df.index))
+# start_date = st.sidebar.date_input("Start Date", datetime(2025, 1, 2).date(), min(df.index), min_value=min(df.index), max_value=max(df.index))
+start_date = st.sidebar.date_input("Start Date", datetime(2025, 1, 2).date(), min_value=min(df.index), max_value=max(df.index))
+
 df = df[df.index >= start_date]
 
 df = compute_volatility(df)
