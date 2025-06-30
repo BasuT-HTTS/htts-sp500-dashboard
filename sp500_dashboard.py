@@ -88,7 +88,13 @@ st.line_chart(df[vol_cols])
 
 st.subheader("HMM Market Regimes")
 # fig_hmm = px.scatter(df, x=df.index, y='Close', color='HMM_State', title="Market States")
-df_plot = df.reset_index()  # Flatten index
+# df_plot = df.reset_index()  # Flatten index
+
+df_plot = df.reset_index()
+# Rename index column to 'Date' if not already
+if 'Date' not in df_plot.columns:
+    df_plot.rename(columns={df_plot.columns[0]: 'Date'}, inplace=True)
+
 fig_hmm = px.scatter(df_plot, x='Date', y='Close', color='HMM_State', title="Market States")
 
 st.plotly_chart(fig_hmm, use_container_width=True)
