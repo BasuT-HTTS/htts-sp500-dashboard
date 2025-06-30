@@ -88,7 +88,7 @@ rename_map = {
 df.rename(columns=rename_map, inplace=True)
 
 
-start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-01"))
+start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-02"))
 
 
 # source = st.sidebar.radio("Data Source", ["Yahoo Finance", "Upload CSV"])
