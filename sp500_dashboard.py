@@ -145,9 +145,9 @@ st.markdown("Forecast using Prophet model. `yhat` is the predicted value; `yhat_
 forecast = forecast_prophet(df)
 if forecast is not None:
     fig_forecast = go.Figure()
-    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat'], name='yhat', line=dict(color='blue')))
-    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_lower'], name='yhat_lower', line=dict(color='lightblue')))
-    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_upper'], name='yhat_upper', line=dict(color='lightblue')))
+    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat'], name='yhat', line=dict(color='black')))
+    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_lower'], name='yhat_lower', line=dict(color='red')))
+    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_upper'], name='yhat_upper', line=dict(color='blue')))
     fig_forecast.update_layout(title="60-Day Forecast using Prophet")
     st.plotly_chart(fig_forecast, use_container_width=True)
     with st.expander("ℹ️ Forecast Legend"):
