@@ -142,5 +142,5 @@ if forecast is not None:
 
 st.subheader("Latest Signal Snapshot")
 cols = ['Close', 'Return', 'HMM_State', 'Signal']
-latest_row = df[[c for c in cols if c in df.columns]].iloc[-1:]
+latest_row = df[[c for c in cols if c in df.columns]].iloc[:-10]
 st.dataframe(latest_row)
