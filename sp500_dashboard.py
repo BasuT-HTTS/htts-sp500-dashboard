@@ -37,9 +37,6 @@ def load_csv_from_file(filename):
         df['Return'] = df['Close'].pct_change()
     return df.dropna()
 
-df = load_csv_from_file(index_choice)
-
-
 # Compute rolling volatility
 def compute_volatility(df, window=20):
     df[f'Volatility_{window}'] = df['Return'].rolling(window).std()
@@ -81,23 +78,25 @@ data_dir = "data"  # Place all CSVs in this subfolder
 csv_files = [f for f in os.listdir(data_dir) if f.endswith('.csv')]
 index_choice = st.sidebar.selectbox("Select Dataset", csv_files)
 
+df = load_csv_from_file(index_choice)
+
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-01"))
 
 
-source = st.sidebar.radio("Data Source", ["Yahoo Finance", "Upload CSV"])
-uploaded_file = None
-symbol = None
+# source = st.sidebar.radio("Data Source", ["Yahoo Finance", "Upload CSV"])
+# uploaded_file = None
+# symbol = None
 
-if source == "Yahoo Finance":
-    symbol = st.sidebar.selectbox("Select Index", ["^GSPC", "^DJI", "^IXIC", "^NSEI", "^BSESN"])
-    df = load_data(start_date, symbol)
-else:
-    uploaded_file = st.sidebar.file_uploader("Upload OHLCV CSV", type=["csv"])
-    if uploaded_file:
-        df = load_csv(uploaded_file)
-    else:
-        st.warning("Please upload a CSV file to proceed.")
-        st.stop()
+# if source == "Yahoo Finance":
+#     symbol = st.sidebar.selectbox("Select Index", ["^GSPC", "^DJI", "^IXIC", "^NSEI", "^BSESN"])
+#     df = load_data(start_date, symbol)
+# else:
+#     uploaded_file = st.sidebar.file_uploader("Upload OHLCV CSV", type=["csv"])
+#     if uploaded_file:
+#         df = load_csv(uploaded_file)
+#     else:
+#         st.warning("Please upload a CSV file to proceed.")
+#         st.stop()
 
 df = compute_volatility(df)
 df, hmm_model = fit_hmm(df)
