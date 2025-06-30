@@ -6,6 +6,7 @@ import plotly.express as px
 from prophet import Prophet
 from hmmlearn.hmm import GaussianHMM
 import plotly.graph_objects as go
+from datetime import datetime, date
 
 st.set_page_config(layout="wide")
 st.title("📊 S&P 500 + Multi-Index Dashboard")
