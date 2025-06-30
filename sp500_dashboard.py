@@ -23,9 +23,12 @@ def load_csv_from_file(filename):
 
     # Date parsing
     if 'Date' in df.columns:
-        df['Date'] = pd.to_datetime(df['Date'], format="%d-%m-%Y", errors='coerce')
-        df = df[df['Date'].notna()]  # Drop rows with bad dates
+        df['Date'] = pd.to_datetime(df['Date'], format="%d-%m-%Y").dt.date
         df.set_index('Date', inplace=True)
+        
+        # df['Date'] = pd.to_datetime(df['Date'], format="%d-%m-%Y", errors='coerce')
+        # df = df[df['Date'].notna()]  # Drop rows with bad dates
+        # df.set_index('Date', inplace=True)
 
     # Clean numeric columns
     for col in ['Close', 'Open', 'High', 'Low']:
