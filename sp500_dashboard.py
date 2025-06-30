@@ -80,6 +80,14 @@ index_choice = st.sidebar.selectbox("Select Dataset", csv_files)
 
 df = load_csv_from_file(index_choice)
 
+rename_map = {
+    "Price": "Close",
+    "Vol.": "Volume",
+    "Change %": "Change_Pct"
+}
+df.rename(columns=rename_map, inplace=True)
+
+
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-01"))
 
 
