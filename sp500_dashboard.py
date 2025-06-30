@@ -40,7 +40,8 @@ def load_csv_from_file(filename):
     if 'Return' not in df.columns and 'Close' in df.columns:
         df['Return'] = df['Close'].pct_change()
 
-    return df.dropna()
+    return df
+    # return df.dropna()
 
 # Rolling volatility
 def compute_volatility(df, window=20):
