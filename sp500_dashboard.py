@@ -137,7 +137,7 @@ if not missing_cols:
 
 # Section: Prophet Forecast
 st.subheader("60-Day Forecast using Prophet")
-st.markdown("Forecast using Facebook Prophet model. `yhat` is the predicted value; `yhat_lower` and `yhat_upper` form the confidence interval.")
+st.markdown("Forecast using Prophet model. `yhat` is the predicted value; `yhat_lower` and `yhat_upper` form the confidence interval.")
 forecast = forecast_prophet(df)
 if forecast is not None:
     fig_forecast = go.Figure()
