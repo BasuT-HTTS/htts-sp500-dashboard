@@ -135,9 +135,17 @@ else:
 st.subheader("60-Day Forecast using Prophet")
 forecast = forecast_prophet(df)
 if forecast is not None:
-    fig_forecast = px.line(forecast, x='ds', y='yhat', title="Forecast")
-    fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_lower'], mode='lines', name='yhat_lower')
-    fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_upper'], mode='lines', name='yhat_upper')
+    # fig_forecast = px.line(forecast, x='ds', y='yhat', title="Forecast")
+    # fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_lower'], mode='lines', name='yhat_lower')
+    # fig_forecast.add_scatter(x=forecast['ds'], y=forecast['yhat_upper'], mode='lines', name='yhat_upper')
+    import plotly.graph_objects as go
+
+    fig_forecast = go.Figure()
+    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat'], name='yhat', line=dict(color='blue')))
+    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_lower'], name='yhat_lower', line=dict(color='lightblue')))
+    fig_forecast.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat_upper'], name='yhat_upper', line=dict(color='lightblue')))
+    fig_forecast.update_layout(title="60-Day Forecast using Prophet")
+
     st.plotly_chart(fig_forecast, use_container_width=True)
 
 st.subheader("Latest Signal Snapshot")
