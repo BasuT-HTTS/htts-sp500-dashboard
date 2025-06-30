@@ -136,7 +136,12 @@ df_plot.columns = [col.strip() for col in df_plot.columns]
 required_cols = ['Date', 'Close', 'HMM_State']
 missing_cols = [col for col in required_cols if col not in df_plot.columns]
 if not missing_cols:
-    fig_hmm = px.scatter(df_plot, x='Date', y='Close', color='HMM_State', title="Market States")
+    color_map = {
+        0: 'red',      # Typically bear/low state
+        1: 'blue',     # Typically bull/high state
+        2: 'black'    # Neutral/volatile state (if you have 3 states)
+    }
+    fig_hmm = px.scatter(df_plot, x='Date', y='Close', color='HMM_State', color_discrete_map=color_map, title="Market States")
     st.plotly_chart(fig_hmm, use_container_width=True)
 
 # Section: Prophet Forecast
