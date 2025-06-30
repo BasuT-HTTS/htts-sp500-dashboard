@@ -90,10 +90,32 @@ st.subheader("HMM Market Regimes")
 # fig_hmm = px.scatter(df, x=df.index, y='Close', color='HMM_State', title="Market States")
 # df_plot = df.reset_index()  # Flatten index
 
+# df_plot = df.reset_index()
+# # Rename index column to 'Date' if not already
+# if 'Date' not in df_plot.columns:
+#     df_plot.rename(columns={df_plot.columns[0]: 'Date'}, inplace=True)
+
 df_plot = df.reset_index()
-# Rename index column to 'Date' if not already
+
+# Ensure 'Date' column exists
 if 'Date' not in df_plot.columns:
-    df_plot.rename(columns={df_plot.columns[0]: 'Date'}, inplace=True)
+    # Rename the first column to Date if unnamed
+    first_col = df_plot.columns[0]
+    if pd.api.types.is_datetime64_any_dtype(df_plot[first_col]):
+        df_plot.rename(columns={first_col: 'Date'}, inplace=True)
+    else:
+        df_plot['Date'] = pd.date_range(start='2000-01-01', periods=len(df_plot))
+
+# Clean any extra spaces from column names
+df_plot.columns = [col.strip() for col in df_plot.columns]
+
+# Ensure required columns are present
+required_cols = ['Date', 'Close', 'HMM_State']
+missing_cols = [col for col in required_cols if col not in df_plot.columns]
+if missing_cols:
+    st.error(f"Missing columns for HMM plot: {missing_cols}")
+    st.stop()
+
 
 fig_hmm = px.scatter(df_plot, x='Date', y='Close', color='HMM_State', title="Market States")
 
