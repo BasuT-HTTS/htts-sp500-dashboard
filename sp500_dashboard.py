@@ -40,6 +40,8 @@ def load_csv_from_file(filename):
     if 'Return' not in df.columns and 'Close' in df.columns:
         df['Return'] = df['Close'].pct_change()
 
+    df = df[df.index >= pd.to_datetime(start_date)]
+
     return df
     # return df.dropna()
 
