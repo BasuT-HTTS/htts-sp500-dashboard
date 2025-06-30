@@ -17,7 +17,7 @@ def load_csv_from_file(filename):
     rename_map = {
         "Price": "Close",
         "Vol.": "Volume",
-        "Change %": "Change_Pct"
+        "Change %": "Return"
     }
     df.rename(columns=rename_map, inplace=True)
 
