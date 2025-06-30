@@ -102,7 +102,7 @@ if not csv_files:
 index_choice = st.sidebar.selectbox("Select Dataset", csv_files)
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-01"))
 
-df = df[df.index >= pd.to_datetime(start_date)]
+# df = df[df.index >= pd.to_datetime(start_date)]
 
 # Main logic
 df = load_csv_from_file(index_choice)
