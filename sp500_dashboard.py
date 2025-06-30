@@ -112,7 +112,7 @@ df = compute_volatility(df)
 df, hmm_model = fit_hmm(df)
 df = aggregate_signals(df)
 
-st.markdown(f"**Dataset Loaded:** `{selected_display}`")
+# st.markdown(f"**Dataset Loaded:** `{selected_display}`")
 
 # Section: Cumulative Returns
 st.subheader("Cumulative Returns")
