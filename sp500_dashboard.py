@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import yfinance as yf
 import pandas as pd
@@ -25,6 +26,19 @@ def load_csv(uploaded_file):
     if 'Close' in df.columns and 'Open' in df.columns:
         df['Return'] = df['Close'].pct_change()
     return df.dropna()
+
+def load_csv_from_file(filename):
+    df = pd.read_csv(os.path.join(data_dir, filename))
+    df.columns = [col.strip() for col in df.columns]
+    if 'Date' in df.columns:
+        df['Date'] = pd.to_datetime(df['Date'])
+        df.set_index('Date', inplace=True)
+    if 'Close' in df.columns:
+        df['Return'] = df['Close'].pct_change()
+    return df.dropna()
+
+df = load_csv_from_file(index_choice)
+
 
 # Compute rolling volatility
 def compute_volatility(df, window=20):
@@ -56,9 +70,19 @@ def aggregate_signals(df):
     df.loc[(df['Return'] < 0) & (df['HMM_State'] == 0), 'Signal'] = 'Bearish'
     return df
 
-# Sidebar options
+# # Sidebar options
+# st.sidebar.title("⚙️ Options")
+# start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-01"))
+
 st.sidebar.title("⚙️ Options")
+data_dir = "data"  # Place all CSVs in this subfolder
+
+# Automatically list all CSVs in /data
+csv_files = [f for f in os.listdir(data_dir) if f.endswith('.csv')]
+index_choice = st.sidebar.selectbox("Select Dataset", csv_files)
+
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2020-01-01"))
+
 
 source = st.sidebar.radio("Data Source", ["Yahoo Finance", "Upload CSV"])
 uploaded_file = None
